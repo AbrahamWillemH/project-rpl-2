@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import { useEffect} from "react"
+import { useEffect } from "react"
 
 // pages & components
 import Home from './pages/Home'
