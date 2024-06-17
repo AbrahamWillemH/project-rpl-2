@@ -1,0 +1,37 @@
+@import url(index.css);
+
+.btn-primary{
+    background-color: var(--col-brand);
+}
+
+.btn-primary:hover{
+    background-color: var(--col-brand-dark);
+    transition: var(--transition);
+}
+
+.btn-secondary:hover{
+    background-color: #c0c0c0;
+    transition: var(--transition);
+    color: white;
+}
+
+.footer-color{
+    background-color: #2a323e;
+}
+
+#register{
+    background: linear-gradient(rgba(214, 220, 229, 0.8), rgba(214, 220, 229, 0.2));
+}
+
+/* MISC */
+::-webkit-scrollbar {
+    width: 15px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #0f0f0f;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #e8b007;
+  }
