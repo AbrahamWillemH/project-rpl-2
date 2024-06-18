@@ -1,12 +1,14 @@
 import {useState} from 'react'
+import { useLogin } from '../hooks/useLogin'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const {login, error, isLoading} = useLogin()
   const handleLogin = async (e) => {
     e.preventDefault()
 
-    console.log(email, password)
+    await login(email, password)
   }
   return (
     <div className="flex items-center justify-center text-center min-h-screen">
@@ -31,7 +33,7 @@ const Login = () => {
                 </p>
               </div>
               <div className="text-center form-group mt-16">
-                <button type="submit" className="btn-primary px-5 py-1 rounded-md text-white hover:bg-[#45a864]">
+                <button disabled={isLoading} type="submit" className="btn-primary px-5 py-1 rounded-md text-white hover:bg-[#45a864]">
                   Login
                 </button>
               </div>
