@@ -9,6 +9,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (user) {
+      // Inisialisasi height dan weight dari data user, fallback ke '' jika tidak ada
       setHeight(user.height || '');
       setWeight(user.weight || '');
     }
@@ -23,28 +24,34 @@ const Dashboard = () => {
 
   const getBMICategory = (bmi) => {
     if (bmi === 'N/A') return 'N/A';
-    if (bmi < 18.5) return 'Underweight';
+    if (bmi < 18.5) return 'Kurus';
     if (bmi >= 18.5 && bmi < 24.9) return 'Normal';
-    if (bmi >= 25 && bmi < 29.9) return 'Overweight';
-    if (bmi >= 30) return 'Obese';
+    if (bmi >= 25 && bmi < 29.9) return 'Gemuk';
+    if (bmi >= 30) return 'Obesitas';
     return 'N/A';
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
+    const updatedUserData = { height, weight, userId: user._id };
+    
     const response = await fetch('/api/user/update', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${user.token}`
       },
-      body: JSON.stringify({ height, weight })
+      body: JSON.stringify(updatedUserData)
     });
 
     if (response.ok) {
       const updatedUser = await response.json();
+      // Perbarui state dengan data user yang diperbarui
+      setHeight(updatedUser.height);
+      setWeight(updatedUser.weight);
+      // Perbarui konteks pengguna global jika diperlukan
       dispatch({ type: 'LOGIN', payload: updatedUser });
-      localStorage.setItem('user', JSON.stringify(updatedUser));
+      // Keluar dari mode edit
       setIsEditing(false);
     }
   };
@@ -62,13 +69,13 @@ const Dashboard = () => {
         <div className="col-span-3 bg-[#d6aa27] rounded-md py-10">
           <p className="font-semibold text-2xl">STATS</p>
           <div className="grid grid-cols-2 gap-2 justify-center mt-4">
-            <p className="text-xl">Height :</p>
+            <p className="text-xl">Tinggi :</p>
             <p className="text-xl">{height} cm</p>
-            <p className="text-xl">Weight :</p>
+            <p className="text-xl">Berat :</p>
             <p className="text-xl">{weight} kg</p>
             <p className="text-xl">BMI :</p>
             <p className="text-xl">{bmi}</p>
-            <p className="text-xl">BMI Category :</p>
+            <p className="text-xl">Kategori BMI :</p>
             <p className="text-xl">{bmiCategory}</p>
           </div>
           <button 
@@ -79,14 +86,14 @@ const Dashboard = () => {
           {isEditing && (
             <form onSubmit={handleSave} className="mt-4">
               <div className="grid grid-cols-2 gap-2 justify-center">
-                <p className="text-xl">Height (cm):</p>
+                <p className="text-xl">Tinggi (cm):</p>
                 <input 
                   type="number" 
                   value={height} 
                   onChange={(e) => setHeight(e.target.value)} 
                   className="text-black px-2 rounded-md ml-[240px] text-center w-1/4"
                 />
-                <p className="text-xl">Weight (kg):</p>
+                <p className="text-xl">Berat (kg):</p>
                 <input 
                   type="number" 
                   value={weight} 
@@ -97,7 +104,7 @@ const Dashboard = () => {
               <button 
                 type="submit" 
                 className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md">
-                Save
+                Simpan
               </button>
             </form>
           )}
@@ -105,24 +112,24 @@ const Dashboard = () => {
         <div className="col-span-1 bg-[#0f0f0f] rounded-md py-10">
           <p className="font-semibold text-2xl">WORKOUTS</p>
           <div className="grid grid-cols-2 justify-center mt-10">
-            <p>Total Workouts :</p>
-            <p>{user ? user.workoutsDone : 'Workouts'}</p>
+            <p>Total Workout :</p>
+            <p>{user ? user.workoutsDone : 'Workout'}</p>
           </div>
         </div>
         <div className="col-span-1 bg-[#0f0f0f] rounded-md py-10">
           <p className="font-semibold text-2xl">CALORIES</p>
           <div className="grid grid-cols-2 justify-center mt-4"> 
-            <p>Burned: </p>
-            <p>{user ? user.caloriesBurned : 'CaloriesBurned'}</p>
-            <p>Gain: </p>
-            <p>{user ? user.caloriesGained : 'CaloriesGained'}</p>
+            <p>Terbakar: </p>
+            <p>{user ? user.caloriesBurned : 'Kalori Terbakar'}</p>
+            <p>Naik: </p>
+            <p>{user ? user.caloriesGained : 'Kalori Naik'}</p>
           </div>
         </div>
         <div className="col-span-1 bg-[#0f0f0f] rounded-md py-10">
           <p className="font-semibold text-2xl">ARTICLES</p>
           <div className="grid grid-cols-2 justify-center mt-10"> 
-            <p>Read :</p>
-            <p>{user ? user.articlesRead : 'ArticlesRead'}</p>
+            <p>Dibaca :</p>
+            <p>{user ? user.articlesRead : 'Artikel Dibaca'}</p>
           </div>
         </div>
       </div>

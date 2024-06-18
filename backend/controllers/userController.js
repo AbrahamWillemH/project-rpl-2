@@ -55,7 +55,7 @@ const getUsers = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-    const { height, weight } = req.body;
+    const { height, weight} = req.body;
     const userId = req.user._id;
   
     try {
@@ -64,7 +64,7 @@ const updateUser = async (req, res) => {
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
-};
+  };
   
 module.exports = { signupUser, loginUser, getUsers, updateUser };
   

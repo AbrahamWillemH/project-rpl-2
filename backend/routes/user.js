@@ -12,6 +12,6 @@ router.post('/login', loginUser);
 router.use(requireAuth);
 
 router.get('/', getUsers);
-router.put('/update').put(protect, updateUser);
+router.put('/update', updateUser);
 
 module.exports = router;
