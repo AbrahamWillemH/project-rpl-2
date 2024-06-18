@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import {useState} from 'react'
 import { useSignup } from '../hooks/useSignup'
 
@@ -35,7 +34,7 @@ const Register = () => {
               <div className="form-group mt-5">
                 <p>
                   Already have an account?
-                  <Link to="/login" className="text-[#f7bb0e] underline ml-2">Log in</Link>
+                  <a href="login.html" className="text-[#f7bb0e] underline ml-2">Log in</a>
                 </p>
               </div>
               <div className="text-center form-group mt-16">

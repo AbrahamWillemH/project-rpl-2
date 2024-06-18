@@ -1,11 +1,8 @@
-import { useAuthContext } from "../hooks/useAuthContext";
-
 const Dashboard = () => {
-  const {user} = useAuthContext()
   return (
     <div>
       <div className="flex flex-col justify-center items-center text-center mt-10 font-bold text-4xl">
-        <p><span>{user.username}'s</span> Dashboard</p>
+        <p>Abe's Dashboard</p>
         <div className="w-3/4 h-[1px] bg-white mt-4"></div>
       </div>
       <div className="grid grid-cols-3 gap-10 justify-center items-center text-center py-14 px-32">
