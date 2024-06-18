@@ -1,15 +1,22 @@
-import {useState} from 'react'
-import { useLogin } from '../hooks/useLogin'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from React Router
+import { useLogin } from '../hooks/useLogin';
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const {login, error, isLoading} = useLogin()
-  const handleLogin = async (e) => {
-    e.preventDefault()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login, error, isLoading } = useLogin();
+  const navigate = useNavigate(); // Initialize useNavigate
 
-    await login(email, password)
-  }
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const success = await login(email, password);
+    if (success) {
+      // Navigate to dashboard on successful login
+      navigate('/dashboard');
+    }
+  };
   return (
     <div className="flex items-center justify-center text-center min-h-screen">
       <div className="container mx-auto">
@@ -37,6 +44,7 @@ const Login = () => {
                   Login
                 </button>
               </div>
+              {error && <p className="text-red-500 mt-2">{error}</p>}
             </form>
           </div>
         </div>

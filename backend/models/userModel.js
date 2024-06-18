@@ -17,6 +17,30 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true,
+    },
+    height: {
+        type: Number,
+        default: 0
+    },
+    weight: {
+        type: Number,
+        default: 0
+    },
+    workoutsDone: {
+        type: Number,
+        default: 0
+    },
+    caloriesBurned: {
+        type: Number,
+        default: 0
+    },
+    caloriesGained: {
+        type: Number,
+        default: 0
+    },
+    articlesRead: {
+        type: Number,
+        default: 0
     }
 })
 

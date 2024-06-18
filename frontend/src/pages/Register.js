@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useSignup } from '../hooks/useSignup'
 
 const Register = () => {
@@ -6,10 +7,16 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const {signup, error, isLoading} = useSignup()
+  const navigate = useNavigate();
+
   const handleSignup = async (e) => {
     e.preventDefault()
 
-    await signup(username, email, password)
+    const success = await signup(username, email, password);
+    if (success) {
+      // Navigate to dashboard on successful login
+      navigate('/dashboard');
+    }
   }
   return (
     <div className="flex items-center justify-center text-center min-h-screen">
