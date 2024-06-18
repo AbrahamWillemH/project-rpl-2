@@ -1,13 +1,18 @@
-import {useState} from 'react'
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useLogin } from '../hooks/useLogin';
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const handleLogin = async (e) => {
-    e.preventDefault()
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { login, error, isLoading } = useLogin();
 
-    console.log(email, password)
-  }
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    await login(username, password);
+  };
+
   return (
     <div className="flex items-center justify-center text-center min-h-screen">
       <div className="container mx-auto">
@@ -17,8 +22,8 @@ const Login = () => {
 
             <form action="#" method="POST" onSubmit={handleLogin} className="flex-col text-left align-left justify-left">
               <div className="form-group mt-5">
-                <p>Email</p>
-                <input type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} value={email} className="border border-black w-72 rounded-md text-black px-2" required />
+                <p>Username</p>
+                <input type="text" id="username" name="username" onChange={(e) => setUsername(e.target.value)} value={username} className="border border-black w-72 rounded-md text-black px-2" required />
               </div>
               <div className="form-group mt-5">
                 <p>Password</p>
@@ -27,21 +32,21 @@ const Login = () => {
               <div className="form-group mt-5">
                 <p>
                   Don't have an account?
-                  <a href="login.html" className="text-[#f7bb0e] underline ml-2">Sign up</a>
+                  <Link to="/register" className="text-[#f7bb0e] underline ml-2">Sign up</Link>
                 </p>
               </div>
               <div className="text-center form-group mt-16">
-                <button type="submit" className="btn-primary px-5 py-1 rounded-md text-white hover:bg-[#45a864]">
+                <button disabled={isLoading} type="submit" className="btn-primary px-5 py-1 rounded-md text-white hover:bg-[#45a864]">
                   Login
                 </button>
               </div>
+              {error && <div className='justify-center items-center text-center text-red-500 mt-4'>{error}</div>}
             </form>
           </div>
         </div>
       </div>
     </div>
-  )
-
-}
+  );
+};
 
 export default Login;
