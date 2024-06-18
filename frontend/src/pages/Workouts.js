@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import WorkoutDetails from '../components/WorkoutDetails';
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -26,20 +26,31 @@ const Workouts = () => {
 
     const handleFinishWorkout = async () => {
         try {
+            // Update user object locally
+            const updatedUser = {
+                ...user,
+                workoutsDone: user.workoutsDone += 1,
+                caloriesBurned: user.caloriesBurned += 200
+            };
+
+            // Update user object in the database
             const response = await fetch(`/api/user/${user._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
                 },
-                body: JSON.stringify({ workoutsDone: user.workoutsDone + 1 })
+                body: JSON.stringify(updatedUser)
             });
 
             if (!response.ok) {
                 throw new Error('Failed to finish workout');
             }
 
-            const updatedUser = await response.json();
+            // Update localStorage with the updated user object
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+
+            // Update user context with the updated user object
             authDispatch({ type: 'LOGIN', payload: updatedUser });
         } catch (error) {
             console.error('Error finishing workout:', error);
@@ -56,7 +67,7 @@ const Workouts = () => {
             <div className="flex justify-center">
                 <button
                     onClick={handleFinishWorkout}
-                    className="btn-primary text-white px-4 py-2 rounded-md mt-8"
+                    className="btn-primary text-white px-4 py-2 rounded-md mb-20"
                 >
                     Finish
                 </button>

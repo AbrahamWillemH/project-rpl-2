@@ -25,7 +25,8 @@ const Navbar = () => {
             <Link to="/dashboard" className="py-[7px]">Dashboard</Link>
             <Link to="/workouts" className="py-[7px]">Workouts</Link>
             <Link to="/meals" className="py-[7px]">Meals</Link>
-            <Link to="/articles" className="py-[7px]">Information</Link>
+            <Link to="/articles" className="py-[7px]">Articles</Link>
+            <Link to="/premium" className="py-[7px]">Premium</Link>
             <Link to="/" onClick={handleClick} className="btn-primary px-[24px] py-[7px] rounded-md">
               <p className="text-white">Log Out</p>
             </Link>

@@ -9,6 +9,8 @@ import Meals from './pages/Meals'
 import Navbar from './components/Navbar'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import Premium from './pages/Premium'
+import Articles from './pages/Articles'
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -53,6 +55,14 @@ function App() {
               <Route
                 path='/signup'
                 element={<Register />}
+              />
+              <Route
+                path='/premium'
+                element={<Premium />}
+              />
+              <Route
+                path='/articles'
+                element={<Articles />}
               />
            </Routes>
         </div>

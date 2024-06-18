@@ -38,9 +38,9 @@ const userSchema = new Schema({
         type: Number,
         default: 0
     },
-    articlesRead: {
-        type: Number,
-        default: 0
+    premiumStatus: {
+        type: String,
+        default: "No"
     }
 })
 

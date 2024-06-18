@@ -21,7 +21,7 @@ const loginUser = async (req, res) => {
                                 workoutsDone: user.workoutsDone,
                                 caloriesBurned: user.caloriesBurned, 
                                 caloriesGained: user.caloriesGained,
-                                articlesRead: user.articlesRead})
+                                premiumStatus: user.premiumStatus})
     } catch (error) {
         res.status(400).json({ error: error.message })
     }    
@@ -29,10 +29,10 @@ const loginUser = async (req, res) => {
 
 // signup user
 const signupUser = async (req, res) => {
-    const { username, email, password } = req.body
+    const { username, email, password, workoutsDone, caloriesBurned, caloriesGained, premiumStatus } = req.body
 
     try {
-        const user = await User.signup(username, email, password)
+        const user = await User.signup(username, email, password, workoutsDone, caloriesBurned, caloriesGained, premiumStatus)
         // create token
         const token = createToken(user._id)
         res.status(200).json({ email: user.email, 
@@ -43,7 +43,7 @@ const signupUser = async (req, res) => {
                                 workoutsDone: user.workoutsDone,
                                 caloriesBurned: user.caloriesBurned, 
                                 caloriesGained: user.caloriesGained,
-                                articlesRead: user.articlesRead})
+                                premiumStatus: user.premiumStatus})
     } catch (error) {
         res.status(400).json({ error: error.message })
     }    
