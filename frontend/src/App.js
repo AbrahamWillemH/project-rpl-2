@@ -7,6 +7,8 @@ import Workouts from './pages/Workouts'
 import Dashboard from './pages/Dashboard'
 import Meals from './pages/Meals'
 import Navbar from './components/Navbar'
+import Register from './pages/Register'
+import Login from './pages/Login'
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -39,6 +41,14 @@ function App() {
               <Route
                 path='/dashboard'
                 element={<Dashboard />}
+              />
+              <Route
+                path='/register'
+                element={<Register />}
+              />
+              <Route
+                path='/login'
+                element={<Login />}
               />
            </Routes>
         </div>

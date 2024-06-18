@@ -1,23 +1,24 @@
 import { Link } from "react-router-dom"
 import '../index.css';
 import '../colors.css'
+import nav_logo from '../assets/logo-nav.png'
 
 const Navbar = () => {
   return (
-    <nav class="flex justify-center h-[70px] bg-black">
-      <div class="container w-[1240px] flex items-center justify-between">
-        <Link to='/' class="flex items-center w-[577px]">
-          <img src="assets/images/logoportal_remove.png" alt="" width="45" />
-          <a href="/" class="ml-5 font-bold text-white">HEALTH TRACKER</a>
+    <nav className="flex justify-center h-[70px] bg-black">
+      <div className="container w-[1240px] flex items-center justify-between">
+        <Link to='/' className="flex items-center w-[577px]">
+          <img src={nav_logo} alt="logo" width="45" />
+          <a href="/" className="ml-5 font-bold text-white">HEALTH TRACKER</a>
         </Link>
-        <div class="w-[600px] flex justify-between">
-          <a href="/dashboard" class="py-[7px]">Dashboard</a>
-          <a href="/workouts" class="py-[7px]">Workouts</a>
-          <a href="/meals" class="py-[7px]">Meals</a>
-          <a href="activity.html" class="py-[7px]">Information</a>
-          <a href="login.html" class="btn-primary px-[24px] py-[7px] rounded-md">
-            <p class="text-white">Log Out</p>
-          </a>
+        <div className="w-[600px] flex justify-between">
+          <Link to="/dashboard" className="py-[7px]">Dashboard</Link>
+          <Link href="/workouts" className="py-[7px]">Workouts</Link>
+          <Link href="/meals" className="py-[7px]">Meals</Link>
+          <Link href="activity.html" className="py-[7px]">Information</Link>
+          <Link href="login.html" className="btn-primary px-[24px] py-[7px] rounded-md">
+            <p className="text-white">Log Out</p>
+          </Link>
         </div>
       </div>
     </nav>
