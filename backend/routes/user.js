@@ -1,16 +1,17 @@
-const express = require ('express')
+const express = require('express');
+const { signupUser, loginUser, getUsers, updateUser } = require('../controllers/userController');
+const requireAuth = require('../middleware/requireAuth');
 
-// controller functions
-const {signupUser, loginUser, getUsers} = require('../controllers/userController')
+const router = express.Router();
 
-const router = express.Router()
+// Rute tanpa autentikasi
+router.post('/signup', signupUser);
+router.post('/login', loginUser);
 
-// login route
-router.post('/login', loginUser)
+// Terapkan middleware pada rute yang membutuhkan autentikasi
+router.use(requireAuth);
 
-router.get('/login', getUsers)
+router.get('/', getUsers);
+router.put('/update').put(protect, updateUser);
 
-// signup route 
-router.post('/signup', signupUser)
-
-module.exports = router
+module.exports = router;

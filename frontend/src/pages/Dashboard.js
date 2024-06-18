@@ -1,24 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const Dashboard = () => {
   const { user, dispatch } = useAuthContext();
   const [isEditing, setIsEditing] = useState(false);
-  const [height, setHeight] = useState(user ? user.height : '');
-  const [weight, setWeight] = useState(user ? user.weight : '');
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
 
-  // Function to calculate BMI
+  useEffect(() => {
+    if (user) {
+      setHeight(user.height || '');
+      setWeight(user.weight || '');
+    }
+  }, [user]);
+
   const calculateBMI = (height, weight) => {
-    if (!height || !weight) return 'N/A'; // Return N/A if height or weight is missing
-    const heightInMeters = height / 100; // Convert height from cm to m
+    if (!height || !weight) return 'N/A';
+    const heightInMeters = height / 100;
     const bmi = weight / (heightInMeters * heightInMeters);
-    return bmi.toFixed(2); // Return BMI rounded to 2 decimal places
+    return bmi.toFixed(2);
   };
 
-  // Function to handle form submission
+  const getBMICategory = (bmi) => {
+    if (bmi === 'N/A') return 'N/A';
+    if (bmi < 18.5) return 'Underweight';
+    if (bmi >= 18.5 && bmi < 24.9) return 'Normal';
+    if (bmi >= 25 && bmi < 29.9) return 'Overweight';
+    if (bmi >= 30) return 'Obese';
+    return 'N/A';
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
-    // Make API request to update user data
     const response = await fetch('/api/user/update', {
       method: 'PUT',
       headers: {
@@ -31,9 +44,13 @@ const Dashboard = () => {
     if (response.ok) {
       const updatedUser = await response.json();
       dispatch({ type: 'LOGIN', payload: updatedUser });
+      localStorage.setItem('user', JSON.stringify(updatedUser));
       setIsEditing(false);
     }
   };
+
+  const bmi = calculateBMI(height, weight);
+  const bmiCategory = getBMICategory(bmi);
 
   return (
     <div>
@@ -46,15 +63,17 @@ const Dashboard = () => {
           <p className="font-semibold text-2xl">STATS</p>
           <div className="grid grid-cols-2 gap-2 justify-center mt-4">
             <p className="text-xl">Height :</p>
-            <p className="text-xl">{user ? user.height : 'Height'} cm</p>
+            <p className="text-xl">{height} cm</p>
             <p className="text-xl">Weight :</p>
-            <p className="text-xl">{user ? user.weight : 'Weight'} kg</p>
+            <p className="text-xl">{weight} kg</p>
             <p className="text-xl">BMI :</p>
-            <p className="text-xl">{user ? calculateBMI(user.height, user.weight) : 'BMI'}</p>
+            <p className="text-xl">{bmi}</p>
+            <p className="text-xl">BMI Category :</p>
+            <p className="text-xl">{bmiCategory}</p>
           </div>
           <button 
             onClick={() => setIsEditing(true)} 
-            className="mt-4 bg-white text-[#000] text-white px-4 py-2 rounded-md">
+            className="mt-4 bg-white text-[#000000] px-4 py-2 rounded-md">
             Edit
           </button>
           {isEditing && (
